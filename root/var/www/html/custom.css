@@ -1,0 +1,13 @@
+/* manually force dark mode, and make accent-bg blue */
+::backdrop, :root {
+  --bg: #212121;
+  --accent-bg: #103c85;
+  --text: #dcdcdc;
+  --text-light: #ababab;
+  --accent: #ffb300;
+  --accent-hover: #ffe099;
+  --accent-text: var(--bg);
+  --code: #f06292;
+  --preformatted: #ccc;
+  --disabled: #111;
+}

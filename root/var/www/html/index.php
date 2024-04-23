@@ -1,0 +1,52 @@
+<?php
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set("display_errors", 1);
+
+$servers = explode(' ', getenv('SERVERS'));
+$pool_str = getenv('POOL_ADDRESS');
+
+function query_ntp_server($timeserver) {
+    try {
+        $socket = fsockopen("udp://$timeserver", 123, $err_no, $err_str, 1);
+        if ($socket) {
+            $ret = '<span style="color:green;">✔</span> Online';
+            fclose($socket);
+        }
+    } catch (Exception $e) {
+        $ret = '<span style="color:red;">✘</span> Offline' . PHP_EOL;
+    }
+    return $ret;
+}
+?>
+
+<!doctype html>
+<html>
+<head>
+<title><?php print $pool_str; ?> status</title>
+<meta name="description" content="NTP Server Status">
+<meta name="keywords" content="ntp time monitoring">
+<link rel="stylesheet" href="./simple.min.css">
+<link rel="stylesheet" href="./custom.css">
+</head>
+<body>
+<header>
+  <h1><?php print $pool_str; ?> status</h1>
+</header>
+
+<main>
+  <figure style="float:left;width:50%;display:inline-block;">
+    <img src="<?php print getenv('STREAM_URL'); ?>" style="margin-left:auto;margin-right:auto;display:block;" />
+    <figcaption><?php print getenv('STREAM_CAPTION'); ?></figcaption>
+  </figure>
+
+  <table style="float:right;">
+  <?php
+    foreach ($servers as $server) {
+      print "    <tr><td>$server</td><td>" . query_ntp_server($server) . "</td></tr>" . PHP_EOL;
+    }
+  ?>
+  </table>
+</main>
+
+</body>
+</html>
