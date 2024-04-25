@@ -12,6 +12,10 @@ Display the status of NTP servers and a stream from
 *   `SERVERS`         - a space-separated list of NTP servers to check
 *   `STREAM_URL`      - the URL to stream from
 *   `STREAM_CAPTION`  - a string to display under the stream
+*   `REDIRECT_HTTPS`  - if the stream is HTTP, redirect HTTPS requests to match
+
+The `REDIRECT_HTTPS` flag is a lazy way to avoid mixed content errors that will
+(in some browsers) prevent a non-SSL stream appearing in an SSL page.
 
 ## Links
 GitHub: <https://github.com/moonbuggy/docker-ntp-monitor>

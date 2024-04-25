@@ -1,4 +1,14 @@
 <?php
+/* If the stream is non-SSL, loading this page with SSL can cause an error in
+  some browsers. Using an environment variable we can redirect to HTTP. */
+
+if (in_array('https', array($_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['REQUEST_SCHEME']))
+    && str_starts_with(getenv('STREAM_URL'), 'http:')
+    && (int) filter_var(getenv('REDIRECT_HTTPS'), FILTER_VALIDATE_BOOLEAN)) {
+  header("Location: http://" . $_SERVER['HTTP_HOST']);
+  die();
+}
+
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set("display_errors", 1);
 
