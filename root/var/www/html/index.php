@@ -5,6 +5,7 @@
 if (in_array('https', array($_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['REQUEST_SCHEME']))
     && str_starts_with(getenv('STREAM_URL'), 'http:')
     && (int) filter_var(getenv('REDIRECT_HTTPS'), FILTER_VALIDATE_BOOLEAN)) {
+  header('HTTP/1.1 301 Moved Permanently');
   header("Location: http://" . $_SERVER['HTTP_HOST']);
   die();
 }
